@@ -1,0 +1,15 @@
+[
+  {
+    "team_name" : "lds_mobile",
+    "team_members": [
+      {
+        "name": "Haifeng Li",
+        "address": "Irvine, California, US"
+      },
+      {
+        "name": "Ben Zhang",
+        "address": "Vancouver, British Columbia, CA"
+      }
+    ]
+  }
+]
