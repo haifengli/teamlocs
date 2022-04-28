@@ -16,7 +16,7 @@ interface GeoCodeService {
         @Volatile
         private var INSTANCE: GeoCodeService? = null
 
-        fun getInstance(context: Context): GeoCodeService = INSTANCE ?: synchronized(this) {
+        fun getInstance(): GeoCodeService = INSTANCE ?: synchronized(this) {
             Retrofit.Builder()
                 .baseUrl("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/")
                 .addConverterFactory(
@@ -24,6 +24,9 @@ interface GeoCodeService {
                 )
                 .build()
                 .create(GeoCodeService::class.java)
+                .apply {
+                    INSTANCE = this
+                }
         }
     }
 }

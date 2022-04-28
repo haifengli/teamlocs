@@ -40,7 +40,7 @@ class GeocodeServiceAPIRepo {
                     return
                 }
                 if (started.compareAndSet(false, true)) {
-                    GeoCodeService.getInstance(context).getLocation(address).enqueue(object :
+                    GeoCodeService.getInstance().getLocation(address).enqueue(object :
                     Callback<GeoCodeResult>{
 
                         override fun onResponse(
