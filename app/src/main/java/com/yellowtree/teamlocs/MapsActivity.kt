@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
@@ -28,7 +30,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val viewModel: TeamViewModel by viewModels()
     private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityMapsBinding
     private var outdatedLocations : List<LiveData<Resource<GeoTimeInfo>>>? = null
     private val markerList = mutableListOf<Marker>()
 
@@ -49,17 +50,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMapsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        var mapFragment: SupportMapFragment? = null
+        if (savedInstanceState == null) {
+            mapFragment = SupportMapFragment()
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.fragment_container_view, mapFragment!!)
+            }
+
+        } else {
+            mapFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as SupportMapFragment
+        }
+        setContentView(R.layout.activity_main)
 
 
         viewModel.teamsObservable.observe(this) { resource ->
             Log.d("Test", "resource size ${resource.data?.size ?: 0}")
             if (resource.status == Status.SUCCESS) {
-                val teams = resource.data
-//                teams?.let {
-//                    viewModel.setTeam(it[0])
-//                }
+
             }
         }
 
@@ -81,13 +90,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
 
     }
+
+
 
     /**
      * Manipulates the map once available.
@@ -130,7 +138,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private val markerColorMap = mapOf<String, Float>("EDT" to BitmapDescriptorFactory.HUE_AZURE, "CDT" to BitmapDescriptorFactory.HUE_BLUE, "MDT" to BitmapDescriptorFactory.HUE_GREEN, "PDT" to BitmapDescriptorFactory.HUE_RED )
+    private val markerColorMap = mapOf<String, Float>("EDT" to BitmapDescriptorFactory.HUE_ORANGE, "CDT" to BitmapDescriptorFactory.HUE_BLUE, "MDT" to BitmapDescriptorFactory.HUE_GREEN, "PDT" to BitmapDescriptorFactory.HUE_RED )
     private fun updateMarker(geoTime: GeoTimeInfo) {
         val coord = geoTime.coord
         val location = LatLng(coord.y, coord.x)

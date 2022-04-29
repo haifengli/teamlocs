@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="color_width">50dp</dimen>
+    <dimen name="illustration_height">20dp</dimen>
+    <dimen name="description_width">30dp</dimen>
+    <dimen name="illustration_text_size">10sp</dimen>
+</resources>

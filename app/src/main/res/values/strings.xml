@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">teamlocs</string>
-    <string name="title_activity_maps">Where Is My Team?</string>
+    <string name="title_activity_maps">Where Are My Slack Channel Members?</string>
 </resources>

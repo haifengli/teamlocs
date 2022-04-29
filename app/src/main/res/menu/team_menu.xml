@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/team1"
-        android:title="Team 1"/>
+        android:title="lds-mobile-android"/>
 
     <item android:id="@+id/team2"
-        android:title="Team 2"/>
+        android:title="lds-mobile-private"/>
 </menu>

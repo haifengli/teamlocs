@@ -1,55 +1,103 @@
 [
   {
-    "team_name" : "lds_mobile_s",
+    "team_name" : "lds_mobile_android",
     "team_members": [
       {
-        "name": "Haifeng Li",
-        "address": "Irvine, California, US"
+        "name": "Anupriya Haribabu",
+        "address": "San Francisco, California, US"
       },
       {
         "name": "Ben Zhang",
         "address": "Vancouver, British Columbia, CA"
       },
       {
-        "name": "Justin Mandzik",
-        "address": "Raleigh, North Carolina, US"
+        "name": "Brandon Page",
+        "address": "San Francisco, California, US"
+      },
+      {
+        "name": "Eric Jonhnson",
+        "address": "Denver, Colorado, US"
+      },
+      {
+        "name": "Haifeng Li",
+        "address": "Irvine, California, US"
       },
       {
         "name": "Jamie Houston",
         "address": "Missouri, US"
       },
       {
+        "name": "Jason Foreman",
+        "address": "Illinois, US"
+      },
+      {
+        "name": "Justin Horst",
+        "address": "Raleigh, North Carolina, US"
+      },
+      {
+        "name": "Nikolai Kotula",
+        "address": "Colorado, US"
+      },
+      {
+        "name": "Ryan Almodovar",
+        "address": "California, US"
+      },
+      {
+        "name": "Wesley Peter",
+        "address": "Bellevue, Washington, US"
+      },
+      {
+        "name": "Wolfgan Mathurin",
+        "address": "San Francisco, California, US"
+      }
+    ]
+  },
+  {
+    "team_name": "lds_mobile_private",
+    "team_members": [
+      {
+        "name": "Adam Fisch",
+        "address": "Utah, US"
+      },
+      {
+        "name": "Adrain Ruvalcaba",
+        "address": "Texas, US"
+      },
+      {
+        "name": "Angela Le",
+        "address": "San Francisco, California, US"
+      },
+      {
         "name": "Anupriya Haribabu",
         "address": "San Francisco, California, US"
       },
       {
-        "name": "Paul Tiarks",
-        "address": "Illinois, US"
+        "name": "Ben Zhang",
+        "address": "Vancouver, British Columbia, CA"
+      },
+      {
+        "name": "Benjamin Edwards",
+        "address": "Hillsboro, Oregon, US"
+      },
+      {
+        "name": "Eric Jonhnson",
+        "address": "Denver, Colorado, US"
       },
       {
         "name": "Greg Loyd",
         "address": "Colorado, US"
       },
       {
-        "name": "Adam Fisch",
-        "address": "Utah, US"
+        "name": "Haifeng Li",
+        "address": "Irvine, California, US"
       },
       {
-        "name": "Ryan Almodovar",
-        "address": "California, US"
-      }
-    ]
-  },
-  {
-    "team_name": "lds_mobile_l",
-    "team_members": [
+        "name": "Justin Mandzik",
+        "address": "Raleigh, North Carolina, US"
+      },
       {
         "name": "Jason Foreman",
         "address": "Illinois, US"
-      },
-      {
-        "name": "Eric Johnson",
-        "address": "Denver, Colorado, US"
       },
       {
         "name": "Wesley Peter",
@@ -58,6 +106,10 @@
       {
         "name": "Dustin Breeze",
         "address": "Colorado, US"
+      },
+      {
+        "name": "Paul Tiarks",
+        "address": "Illinois, US"
       }
     ]
   }
