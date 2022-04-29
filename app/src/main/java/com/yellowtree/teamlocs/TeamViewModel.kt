@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.yellowtree.teamlocs.model.Coordinate
 import com.yellowtree.teamlocs.model.GeoLocation
+import com.yellowtree.teamlocs.model.GeoTimeInfo
 import com.yellowtree.teamlocs.model.Team
 import com.yellowtree.teamlocs.repo.GeocodeServiceAPIRepo
 import com.yellowtree.teamlocs.repo.TeamServiceAPIRepo
@@ -19,9 +20,9 @@ class TeamViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _curTeamObservable = MutableLiveData<Team>()
 
-    val teamLocationObservable: LiveData<List<LiveData<Resource<Coordinate>>>> =
+    val teamLocationObservable: LiveData<List<LiveData<Resource<GeoTimeInfo>>>> =
         _curTeamObservable.switchMap { team ->
-            val resultList = mutableListOf<LiveData<Resource<Coordinate>>>()
+            val resultList = mutableListOf<LiveData<Resource<GeoTimeInfo>>>()
             team.teamMembers?.let { members ->
                 for (member in members) {
                     resultList.add(GeocodeServiceAPIRepo.getInstance().geocode(app, member.address))
@@ -30,16 +31,12 @@ class TeamViewModel(app: Application) : AndroidViewModel(app) {
             MutableLiveData(resultList)
 
         }
-    val testCandidateObservable = GeocodeServiceAPIRepo.getInstance().geocode(app, "Irvine, CA, US")
 
-    init {
-
-    }
 
 
     fun setTeam(team : Team) {
         _curTeamObservable.value?.let {
-            if (team.teamName == team.teamName) {
+            if (it.teamName == team.teamName) {
                 return
             }
         }

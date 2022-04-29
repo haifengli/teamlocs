@@ -9,7 +9,7 @@ import retrofit2.Call
 
 interface TimeZoneService {
 
-    @GET("get-time-zone?key=2XD2FY9897J1&format=json")
+    @GET("get-time-zone?key=2XD2FY9897J1&format=json&by=position")
     fun getTimeZone(@Query("lat") latitude: Double, @Query("lng") longitude: Double) : Call<TimeZoneInfo>
 
     companion object {

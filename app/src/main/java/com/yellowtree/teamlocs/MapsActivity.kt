@@ -3,6 +3,9 @@ package com.yellowtree.teamlocs
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -13,9 +16,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.yellowtree.teamlocs.databinding.ActivityMapsBinding
 import com.yellowtree.teamlocs.model.Coordinate
+import com.yellowtree.teamlocs.model.GeoTimeInfo
 import com.yellowtree.teamlocs.util.Resource
 import com.yellowtree.teamlocs.util.Status
 
@@ -24,14 +29,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val viewModel: TeamViewModel by viewModels()
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private var outdatedLocations : List<LiveData<Resource<Coordinate>>>? = null
+    private var outdatedLocations : List<LiveData<Resource<GeoTimeInfo>>>? = null
+    private val markerList = mutableListOf<Marker>()
 
 
-    private val coordinateObserver = Observer<Resource<Coordinate>> {
+    private val coordinateObserver = Observer<Resource<GeoTimeInfo>> {
         if (it.status == Status.SUCCESS) {
-            val coord = it.data
-            coord?.apply {
-                Log.d("Test", "candidate coordidate x: $coord.x; y: $coord.y ")
+            val geoTimeInfo = it.data
+            geoTimeInfo?.apply {
+                Log.d("Test", "candidate coordidate x: ${geoTimeInfo.coord.x}; y: ${geoTimeInfo.coord.y} ")
                 updateMarker(this)
             }
 
@@ -51,9 +57,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.d("Test", "resource size ${resource.data?.size ?: 0}")
             if (resource.status == Status.SUCCESS) {
                 val teams = resource.data
-                teams?.let {
-                    viewModel.setTeam(it[0])
-                }
+//                teams?.let {
+//                    viewModel.setTeam(it[0])
+//                }
             }
         }
 
@@ -63,6 +69,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 for(outdatedLocation in it) {
                     outdatedLocation.removeObservers(this)
                 }
+            }
+            for(marker in markerList) {
+                marker.remove()
             }
             for(location in currentLocations) {
                 location.observe(this, coordinateObserver)
@@ -91,11 +100,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(38.9, -105.5)))
     }
 
-    private fun updateMarker(cord: Coordinate) {
-        val location = LatLng(cord.y, cord.x)
-        mMap.addMarker(MarkerOptions().position(location).title("New Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.team_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (viewModel.teamsObservable.value?.status == Status.SUCCESS) {
+            val teams = viewModel.teamsObservable.value?.data
+            return when (item.itemId) {
+                R.id.team1 -> {
+                    viewModel.setTeam(teams!![0])
+                    true
+                }
+                R.id.team2 -> {
+                    viewModel.setTeam(teams!![1])
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+
+        }
+        return onOptionsItemSelected(item)
+
+    }
+
+    private val markerColorMap = mapOf<String, Float>("EDT" to BitmapDescriptorFactory.HUE_AZURE, "CDT" to BitmapDescriptorFactory.HUE_BLUE, "MDT" to BitmapDescriptorFactory.HUE_GREEN, "PDT" to BitmapDescriptorFactory.HUE_RED )
+    private fun updateMarker(geoTime: GeoTimeInfo) {
+        val coord = geoTime.coord
+        val location = LatLng(coord.y, coord.x)
+        val marker = mMap.addMarker(MarkerOptions().position(location).title(geoTime.address).icon(BitmapDescriptorFactory.defaultMarker(markerColorMap[geoTime.timeZone] ?: BitmapDescriptorFactory.HUE_ROSE)))
+        marker?.let {
+            markerList.add(it)
+        }
+
+
     }
 }

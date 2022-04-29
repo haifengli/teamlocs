@@ -1,6 +1,6 @@
 [
   {
-    "team_name" : "lds_mobile",
+    "team_name" : "lds_mobile_s",
     "team_members": [
       {
         "name": "Haifeng Li",
@@ -37,6 +37,27 @@
       {
         "name": "Ryan Almodovar",
         "address": "California, US"
+      }
+    ]
+  },
+  {
+    "team_name": "lds_mobile_l",
+    "team_members": [
+      {
+        "name": "Jason Foreman",
+        "address": "Illinois, US"
+      },
+      {
+        "name": "Eric Johnson",
+        "address": "Denver, Colorado, US"
+      },
+      {
+        "name": "Wesley Peter",
+        "address": "Bellevue, Washington, US"
+      },
+      {
+        "name": "Dustin Breeze",
+        "address": "Colorado, US"
       }
     ]
   }
